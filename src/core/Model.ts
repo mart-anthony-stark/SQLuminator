@@ -119,12 +119,13 @@ export class Model {
    * @param where
    * @returns
    */
-  deleteMany(where: any) {
+  deleteMany(where?: any) {
     const sql = queryFactory.delete(this.table, where);
+    const positionalParams = where ? Object.values(where) : undefined;
     return new Promise((resolve, reject) => {
       SQL.connection.query(
         sql,
-        Object.values(where),
+        positionalParams,
         (err: any, results: QueryResults) => {
           if (err) {
             reject(err);
