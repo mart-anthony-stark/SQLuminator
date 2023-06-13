@@ -1,6 +1,6 @@
 {
   "name": "sqluminator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SQLuminator is a versatile SQL ORM library for JavaScript/TypeScript that simplifies database interactions and enables seamless mapping between SQL databases and object-oriented programming.",
   "main": "lib/es5/index.js",
   "module": "lib/es6/index.js",
