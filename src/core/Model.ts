@@ -115,6 +115,52 @@ export class Model {
   }
 
   /**
+   * Update single record by id
+   * @param id
+   * @param data
+   * @returns
+   */
+  findByIdAndUpdate(id: number, data: any): Promise<DeleteResults> {
+    const sql = queryFactory.update(this.table, data, { id });
+    return new Promise((resolve, reject) => {
+      SQL.connection.query(
+        sql,
+        Object.values(data),
+        (err: any, results: any, fields: FieldPacket[]) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  }
+
+  /**
+   * Updates a record using conditions
+   * @param data
+   * @param where
+   * @returns
+   */
+  findOneAndUpdate(data: any, where?: any) {
+    const sql = queryFactory.update(this.table, data, where);
+    return new Promise((resolve, reject) => {
+      SQL.connection.query(
+        sql,
+        Object.values(data),
+        (err: any, results: any, fields: FieldPacket[]) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+        }
+      );
+    });
+  }
+
+  /**
    *
    * @param where
    * @returns
