@@ -1,17 +1,25 @@
-import { SQLObject } from "../types/mysql.types";
-const mysql = require("mysql");
+import { ConnectionOpts, SQLObject } from "../types/mysql.types";
 
-/**
- * MySQL connection - uses native mysql driver
- */
-export const SQL: SQLObject = {
-  connection: mysql.createPool({
-    connectionLimit: process.env.DB_CONN_LIMIT || 10,
-    user: process.env.DB_USER || "root",
-    host: process.env.DB_HOST || "localhost",
-    password: process.env.DB_PASSWORD || "",
-    database: process.env.DB_DATABASE || "orm",
-    port: process.env.DB_PORT || 3306,
-  }),
+const SQL: SQLObject = {
+  connection: "",
+  createConnection: (
+    driver: string = "mysql",
+    db_setting: ConnectionOpts = {
+      connectionLimit: 10,
+      user: "root",
+      host: "localhost",
+      password: "",
+      database: "orm",
+      port: 3306,
+    }
+  ) => {
+    let sqlDriver;
+    if (driver === "mysql") {
+      sqlDriver = require("mysql");
+    }
+    SQL.connection = sqlDriver.createPool(db_setting);
+  },
   models: [],
 };
+SQL.createConnection();
+export { SQL };
