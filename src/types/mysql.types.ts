@@ -33,8 +33,21 @@ export interface FieldPacket {
   zeroFill: false;
   protocol41: true;
 }
+export type ConnectionOpts = {
+  connectionLimit?: number;
+  user: string;
+  host: string;
+  password: string;
+  database: string;
+  port: number;
+};
 
 export interface SQLObject {
+  driver?: string;
   connection: any;
+  createConnection: (
+    sqlDriver?: string,
+    connection_options?: ConnectionOpts
+  ) => void;
   models: any[];
 }
